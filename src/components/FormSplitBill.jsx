@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Button from "./UI/Button"
 
-function FormSplitBill ({ selectedFriend , onSubmit }) {
+function FormSplitBill ({ selectedFriend , onSubmit , noInput }) {
     const [billValue, setBillValue] = useState("")
     const [yourExpense, setYourExpense] = useState('')
     const [selectOption, setSelectOption] = useState('user')
@@ -9,8 +9,14 @@ function FormSplitBill ({ selectedFriend , onSubmit }) {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        if (!billValue || !yourExpense) return
-        onSubmit(selectOption === 'user' ? friendExpense : -yourExpense)
+        if (billValue === "" || billValue === 0){
+            noInput('Please enter a valid bill amount')
+        } else if (yourExpense === ""){
+            noInput('Please enter your expense')
+        }else {
+            if (!billValue || !yourExpense) return
+            onSubmit(selectOption === 'user' ? friendExpense : -yourExpense)
+        }
     }
 
     return (

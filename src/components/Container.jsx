@@ -3,6 +3,7 @@ import FormAddFriend from "./FormAddFriend";
 import Button from "./UI/Button";
 import { useState } from "react";
 import FormSplitBill from "./FormSplitBill";
+import ErrorMessage from "./UI/ErrorMessage";
 
 const initialFriends = [
     {
@@ -29,6 +30,9 @@ function Container () {
     const [friends , setFriends] = useState(initialFriends)
     const [isOpen , setIsOpen] = useState(false)
     const [selectedFriend , setSelectedFriend] = useState(null)
+    const [error , setError] = useState(false)
+    const [errorMessage , setErrorMessage] = useState('')
+    
     
     const addFriend = (newFriend) => {
         setFriends([...friends, newFriend])
@@ -55,11 +59,20 @@ function Container () {
     }
 
     function splitBillHandler (value) {
-        setSelectedFriend(null)
         setFriends(friends.map((friend)=> 
             friend.id === selectedFriend.id ? 
-            {...friend , balance : friend.balance + value} : 
-            friend))
+        {...friend , balance : friend.balance + value} : 
+        friend))
+        setSelectedFriend(null)
+    }
+
+    function triggerError (string){
+        setErrorMessage(string)
+        setError(true)
+    }
+
+    const closeError = () => {
+        setError(false)
     }
 
     return (
@@ -77,15 +90,21 @@ function Container () {
                     ) : 
                     (
                         <>
-                            <FormAddFriend onSubmit={addFriend} />
+                            <FormAddFriend onSubmit={addFriend} 
+                            noInput={triggerError} />
                             <Button onClick={addFriendOpen}>Cancel</Button>
                         </>
                     )} 
             </div>
-            {selectedFriend && <FormSplitBill 
+            {selectedFriend && 
+            <FormSplitBill 
             selectedFriend={selectedFriend}
             onSubmit={splitBillHandler}
+            noInput={triggerError}
             />}
+            {error &&
+            <ErrorMessage onClose={closeError} 
+            errorMessage={errorMessage} />}
         </div>
     );
 }

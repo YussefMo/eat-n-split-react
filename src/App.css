@@ -25,6 +25,31 @@ body {
   justify-content: center;
 }
 
+.error-window{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.614);
+}
+
+.error-body{
+  max-width: 600px;
+  padding: 2.5rem;
+  background-color: var(--color-lightest);
+  border-radius: 7px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-body *{
+  margin-bottom: 2rem;
+}
+
+
 .app {
   min-height: 66vh;
   display: grid;

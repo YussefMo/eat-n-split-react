@@ -1,16 +1,22 @@
 import { useState } from "react"
 import Button from "./UI/Button"
 
-function FormAddFriend ({ onSubmit }) {
+function FormAddFriend ({ onSubmit , noInput }) {
     const [name , setName] = useState('')
     const [image , setImage] = useState('https://i.pravatar.cc/300')
 
     const SubmitHandler = (e) => {
         e.preventDefault()
-        const newFriend = {name , image , id : Date.now() , balance: 0}
-        onSubmit(newFriend)
-        setName('')
-        setImage('https://i.pravatar.cc/300')
+        if (name.trim() === '') {
+            noInput('Please enter a name')
+        } else if (image.trim() === '') {
+            noInput('Please enter an image URL')
+        }else {
+            const newFriend = {name , image , id : Date.now() , balance: 0}
+            onSubmit(newFriend)
+            setName('')
+            setImage('https://i.pravatar.cc/300')
+        }
     }
 
     return (
