@@ -101,6 +101,7 @@ function Container () {
             selectedFriend={selectedFriend}
             onSubmit={splitBillHandler}
             noInput={triggerError}
+            key={selectedFriend.id}
             />}
             {error &&
             <ErrorMessage onClose={closeError} 
